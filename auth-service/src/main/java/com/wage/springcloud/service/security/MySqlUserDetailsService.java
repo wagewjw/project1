@@ -1,21 +1,26 @@
 package com.wage.springcloud.service.security;
 
-import com.wage.springcloud.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.wage.springcloud.Dao.UserDao;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author wage
  * @version 1.0
  */
+
+@Service
 public class MySqlUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    @Resource
+    private UserDao userDao;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findById(username).orElseThrow(()->new UsernameNotFoundException(username));
+        return userDao.findById(username).orElseThrow(()->new UsernameNotFoundException(username));
     }
 }
